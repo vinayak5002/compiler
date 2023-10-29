@@ -62,6 +62,7 @@ top_declarations		: top_declaration top_declarations
 						| ;
 
 top_declaration			:	data_declarations
+                        |   newtype_declarations
 						|	newtype_declarations deriving
 		    			| 	data_declarations deriving
 		    			| 	class_declarations
@@ -93,7 +94,10 @@ contypes				:	type VBAR contypes
 
 // New type declarations
 
-newtype_declarations	:	NEWTYPE qcon ASSIGN new_constr;
+newtype_declarations	:	NEWTYPE qcon ASSIGN new_constr
+                        |   NEWTYPE qcon args ASSIGN new_constr
+                        |   NEWTYPE context DOUBLEARROW qcon ASSIGN new_constr;
+
 new_constr				:	UID type
 						|	UID LFLOWER ID DOUBLE_COLON type RFLOWER;
 
