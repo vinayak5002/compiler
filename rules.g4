@@ -102,12 +102,16 @@ new_constr				:	UID type
 						|	UID LFLOWER ID DOUBLE_COLON type RFLOWER;
 
 // Class Declarations
-class_declarations		:	CLASS qcon ID WHERE cdecls;
+class_declarations		:	CLASS qcon ID WHERE cdecls
+                        |   CLASS context DOUBLEARROW qcon ID WHERE cdecls;
 
 cdecls					:	cdecl cdecls | cdecl;
 
-cdecl					:	vars DOUBLE_COLON type
-						|	vars DOUBLE_COLON context DOUBLEARROW type;
+cdecl					:	ID DOUBLE_COLON types
+						|	ID DOUBLE_COLON context DOUBLEARROW types
+						|   DEFAULT ID DOUBLE_COLON types
+            			|	DEFAULT ID DOUBLE_COLON context DOUBLEARROW types
+            			|   TYPE qcon ID;
 
 context					:	classes
 						|	LPAREN classes RPAREN;
