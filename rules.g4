@@ -271,7 +271,8 @@ op						: 	PLUS
 						| 	AND
 						| 	OR
 						| 	COLON
-						| 	CONCAT ;
+						| 	CONCAT
+						|	RARROW ;
 
 literal					: 	INTEGER
 						| 	FLOAT
