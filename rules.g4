@@ -148,7 +148,8 @@ rhs						:	ASSIGN expression
 						|	gdrhs
 						| 	gdrhs WHERE declarations;
 
-gdrhs					:	gd ASSIGN expression;
+gdrhs					:	gd ASSIGN expression gdrhs
+                        |   ;
 
 gd						:	VBAR exp1;
 
