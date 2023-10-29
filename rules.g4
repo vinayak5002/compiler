@@ -166,7 +166,8 @@ pat						:	ID
 						|	WILDCARD
 						| 	LPAREN pats RPAREN
 						|	LBRACKET pats RBRACKET
-						|	pat COLON;
+						|	pat COLON
+						|   list_comprehensions;
 
 gendecl					:	ID DOUBLE_COLON context DOUBLEARROW types
 						|	ID DOUBLE_COLON types
@@ -246,7 +247,8 @@ list_comprehensions		:	LPAREN expression RPAREN
 						| 	LBRACKET expression RANGE RBRACKET
 						| 	LBRACKET expression RANGE expression RBRACKET
 						| 	LBRACKET expression COMMA expression DOUBLE_DOT expression RBRACKET
-						| 	LBRACKET expression VBAR gens RBRACKET;
+						| 	LBRACKET expression VBAR gens RBRACKET
+						|   LBRACKET RBRACKET;
 
 gens					:	gen COMMA gens | gen;
 gen						:	pat ARROW expression
