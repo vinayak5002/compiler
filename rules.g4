@@ -1,4 +1,4 @@
-grammar hello;
+grammar rules;
 
 module					:	module_declarations body '$'
 						|	body '$';
@@ -144,6 +144,7 @@ funlhs					:	ID pats
 						|	ID LPAREN funlhs RPAREN pats;
 
 rhs						:	ASSIGN expression
+                        |   ASSIGN list_comprehensions
 						|	RARROW expression
 						|	ASSIGN expression WHERE declarations
 						|	gdrhs
@@ -240,6 +241,7 @@ args					:	expression COMMA args
 
 list_comprehensions		:	LPAREN expression RPAREN
 						| 	LPAREN exps RPAREN
+                        |   LBRACKET exps RBRACKET
 						| 	LBRACKET expression RANGE RBRACKET
 						| 	LBRACKET expression RANGE expression RBRACKET
 						| 	LBRACKET expression COMMA expression DOUBLE_DOT expression RBRACKET
