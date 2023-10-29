@@ -168,7 +168,7 @@ pat						:	ID
 						|	LBRACKET pats RBRACKET
 						|	pat COLON;
 
-gendecl					:	ID DOUBLE_COLON context DOUBLEARROW
+gendecl					:	ID DOUBLE_COLON context DOUBLEARROW types
 						|	ID DOUBLE_COLON types
 						|	fixity INTEGER ops;
 
@@ -193,6 +193,7 @@ type					:	atype
 						|	ARROW type;
 
 atype					:	qcon
+                        |   ID
 						|	qcon LPAREN RPAREN
                         |   LPAREN types RPAREN
 						|	LPAREN type_list RPAREN
