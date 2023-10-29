@@ -1,4 +1,4 @@
-grammar rules;
+grammar hello;
 
 module					:	module_declarations body '$'
 						|	body '$';
@@ -144,6 +144,7 @@ funlhs					:	ID pats
 						|	ID LPAREN funlhs RPAREN pats;
 
 rhs						:	ASSIGN expression
+						|	RARROW expression
 						|	ASSIGN expression WHERE declarations
 						|	gdrhs
 						| 	gdrhs WHERE declarations;
@@ -270,7 +271,8 @@ op						: 	PLUS
 						| 	AND
 						| 	OR
 						| 	COLON
-						| 	CONCAT;
+						| 	CONCAT
+						|	RARROW ;
 
 literal					: 	INTEGER
 						| 	FLOAT
