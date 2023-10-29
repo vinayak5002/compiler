@@ -74,17 +74,22 @@ deriving				:	DERIVING LPAREN dclasses RPAREN;
 dclasses				:	qcon COMMA dclasses | qcon;
 
 // Data declarations
-data_declarations		:	DATA qcon ASSIGN constrs;
+data_declarations		:	DATA qcon ASSIGN constrs
+                        |   DATA qcon ID ASSIGN constrs
+                        |   DATA context DOUBLEARROW qcon ASSIGN constrs;
 
 constrs					:	UID
-						|	UID contypes
+						|	contypes
 						|	UID	LFLOWER fields RFLOWER;
 
 fields 					:	field COMMA fields | field;
 field					:	ID DOUBLE_COLON type;
 
 
-contypes				:	type VBAR contypes | type;
+contypes				:	type VBAR contypes
+                        |   type ID VBAR contypes
+                        |   type
+                        |   type ID;
 
 // New type declarations
 
