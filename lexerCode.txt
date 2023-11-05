@@ -1,0 +1,45 @@
+import java.io.IOException;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+
+import org.antlr.v4.runtime.ANTLRFileStream;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.Token;
+
+public class HaskellLexer {
+
+    public static void main(String[] args) throws IOException {
+        if (args.length == 0) {
+            System.err.println("Please provide a filename as an argument.");
+            return;
+        }
+
+        String outputFileName = "output";
+        ANTLRFileStream input = new ANTLRFileStream(args[0]);
+        ANTLRInputStream ip = new ANTLRInputStream(input.toString());
+        rulesLexer lex = new rulesLexer(ip);
+        Token token;
+        String[] ruleNames = lex.getRuleNames();
+
+        // Create a FileWriter and BufferedWriter to write to the "output" file
+        FileWriter fileWriter = new FileWriter(outputFileName);
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+        while ((token = lex.nextToken()).getType() != -1) {
+            String s = null;
+            String outputLine = "line " + token.getLine() + ":" + token.getStartIndex() + " token <"
+                    + token.getType() + ", " + token.getText() + " \t\t\t\t\t\t~~" + ruleNames[token.getType() - 1];
+
+            // Print the output to the screen
+            System.out.println(outputLine);
+
+            // Write the output to the file
+            bufferedWriter.write(outputLine);
+            bufferedWriter.newLine();
+        }
+
+        // Close the file writer and buffered writer
+        bufferedWriter.close();
+        fileWriter.close();
+    }
+}
