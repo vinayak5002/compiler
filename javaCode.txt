@@ -1,0 +1,21 @@
+import java.io.IOException;
+
+import org.antlr.v4.runtime.ANTLRFileStream;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.CommonTokenStream;
+
+public class HaskellParser {
+
+	public static void main(String[] args) throws IOException {
+		ANTLRFileStream input = new ANTLRFileStream(args[0]);
+        ANTLRInputStream ip = new ANTLRInputStream(input.toString());
+        
+        rulesLexer lex = new rulesLexer(ip);
+        Token token;
+        
+        CommonTokenStream tokStream = new CommonTokenStream(lex);
+        rulesParser parser = new rulesParser(tokStream);
+        parser.module();
+	}
+}

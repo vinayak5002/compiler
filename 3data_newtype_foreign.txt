@@ -1,0 +1,40 @@
+data MyType = Constructor1 | Constructor2
+
+data Maybe a = Just a | Nothing
+
+data List a = Nil | Cons a (List a)
+
+data Person = Person { name :: String, age :: Int }
+
+data Color = Red | Green | Blue
+  deriving (Eq, Show)
+
+newtype MyNewType = MyNewType ExistingType
+
+newtype Wrapper a = Wrapper a
+
+newtype EqWrapper a = EqWrapper a
+  deriving (Eq)
+
+newtype Password = Password String
+
+newtype Temperature = Temperature Double
+  deriving (Show, Eq)
+
+newtype Pair a b = Pair (a, b)
+
+newtype PositiveInt = PositiveInt Int
+
+newtype NonEmptyList a = NonEmptyList [a]
+
+foreign import ccall "math.h sin"
+   c_sin :: CDouble -> CDouble
+
+foreign export ccall "addTwoNumbers"
+   addTwoNumbers :: Int -> Int -> Int
+
+foreign import safe "math.h sin"
+   c_safe_sin :: CDouble -> CDouble
+
+foreign import unsafe "math.h sin"
+   c_unsafe_sin :: CDouble -> CDouble

@@ -1,7 +1,7 @@
 grammar rules;
 
-module					:	module_declarations body '$'
-						|	body '$';
+module					:	module_declarations body
+						|	body;
 
 body					:	import_statements top_declarations
 						| 	top_declarations;
@@ -71,7 +71,9 @@ top_declaration			:	data_declarations
 		    			| 	foreign_import
 		    			| 	declarations;
 
-deriving				:	DERIVING LPAREN dclasses RPAREN;
+deriving				:	DERIVING LPAREN dclasses RPAREN
+                        |   DERIVING dclasses;
+
 dclasses				:	qcon COMMA dclasses | qcon;
 
 // Data declarations
@@ -158,6 +160,7 @@ funlhs					:	ID pats
 
 rhs						:	ASSIGN expression
                         |   ASSIGN list_comprehensions
+                        |   ASSIGN function_application
 						|	RARROW expression
 						|	ASSIGN expression WHERE declarations
 						|	gdrhs
@@ -191,14 +194,17 @@ ops						:	op COMMA ops | op;
 fixity					:	INFIXL | INFIXR | INFIX;
 
 // Foreign imports
-foreign_import			:	FOREIGN IMPORT calling_convention STRING AS qcon LPAREN types RPAREN;
+foreign_import			:	FOREIGN IMPORT calling_convention STRING gendecl
+                        |   FOREIGN EXPORT calling_convention STRING gendecl;
 
 calling_convention		:	STDCALL
                   		| 	CCALL
                   		| 	CAPI
 	      				| 	CPPCALL
       					| 	JSCALL
-	      				|	REC;
+	      				|	REC
+	      				|   SAFE
+	      				|   UNSAFE;
 
 types 					:	type types
                         |   type;
@@ -233,6 +239,8 @@ stmts					:	stmt stmts | stmt;
 
 stmt					:	expression
 						|	pat ARROW expression
+						|   pat ASSIGN expression
+						|   pat ASSIGN expression DOUBLE_COLON types
 						|	LET declarations;
 
 expression				:	lambda
@@ -248,7 +256,9 @@ expression				:	lambda
 						| 	MINUS expression;
 
 function_application	: 	ID args
-						|	ID LPAREN args RPAREN;
+						|	ID LPAREN args RPAREN
+						|   qvcon args
+						|   qvcon;
 
 args					:	expression COMMA args
 						|	expression
@@ -291,7 +301,9 @@ op						: 	PLUS
 						| 	OR
 						| 	COLON
 						| 	CONCAT
-						|	RARROW ;
+						|	RARROW
+                        |   BACKTICK ID BACKTICK
+                        |   BACKTICK UID BACKTICK;
 
 literal					: 	INTEGER
 						| 	FLOAT
@@ -413,7 +425,7 @@ MULTI_LINE_COMMENT: '{-' .*? '-}'->skip	;
 
 //IDENTIFIERS:
 UID				: [A-Z][a-zA-Z0-9]*  ;
-ID 				: [a-zA-Z][a-zA-Z0-9]*	;
+ID 				: [a-zA-Z][a-zA-Z0-9_]*	;
 
 //CONSTANTS
 INTEGER 		: [0-9]+															;

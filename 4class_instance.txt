@@ -1,0 +1,39 @@
+class MyClass a where
+    myFunction :: a -> String
+
+class MyTypeClass a where
+    function1 :: a -> Int
+    function2 :: a -> Bool
+
+class Eq a => MyEqClass a where
+    isEqual :: a -> a -> Bool
+
+class MyShow a where
+    myShow :: a -> String
+    default myShow :: Show a => a -> String
+    myShow = show
+
+class MyAssocType a where
+    type MyType a
+    getSomething :: a -> MyType a
+
+class MyDefault a where
+    myDefault :: a -> String
+    myDefault x = "Default: " ++ show x`
+
+
+-- Defining an instance for an existing typeclass (Show)
+data Person = Person String Int
+
+instance Show Person where
+    show (Person name age) = "Person " ++ name ++ " " ++ show age
+
+-- Deriving instances for custom data types (Eq, Show)
+data Color = Red | Green | Blue deriving (Eq, Show)
+
+-- Deriving an instance for a newtype
+newtype Temperature = Temperature Double deriving (Eq, Show)
+
+-- Overlapping instances and incoherent instances
+class ExampleClass a where
+    exampleFunc :: a -> String

@@ -1,0 +1,41 @@
+-- Function to describe numbers using simple variable patterns
+describeNumber :: Int -> String
+describeNumber 0 = "Zero"
+describeNumber 1 = "One"
+describeNumber _ = "Other"
+
+-- Function to describe points using tuple patterns
+describePoint :: (Int, Int) -> String
+describePoint (0, 0) = "Origin"
+describePoint (x, 0) = "On the x-axis at " ++ show x
+describePoint (0, y) = "On the y-axis at " ++ show y
+describePoint (x, y) = "At coordinates (" ++ show x ++ ", " ++ show y ++ ")"
+
+-- Function to describe lists using list patterns
+describeList :: [Int] -> String
+describeList [] = "Empty List"
+describeList [x] = "List with one element: " ++ show x
+describeList [x, y] = "List with two elements: " ++ show x ++ ", " ++ show y
+describeList (x : xs) = "List with more than two elements, starting with " ++ show x
+
+numbers :: [Integer]
+numbers = [1, 2, 3, 4, 5]
+
+squares = [x * x | x <- numbers]
+
+evenNumbers = [x | x <- numbers, even x]
+
+xs = [1, 2, 3]
+ys = ["A", "B"]
+pairs = [(x, y) | x <- xs, y <- ys]
+
+positiveSquares = [x * x | x <- numbers, x > 0]
+
+tuples = [(1, "one"), (2, "two"), (3, "three")]
+matching = [x | (x, "two") <- tuples]
+
+tuples = [(1, "one"), (2, "two"), (3, "three")]
+matching = [x | (x, "two") <- tuples]
+
+sentence = "Haskell is functional programming"
+uppercaseVowels = [if elem c "aeiou" then toUpper c else c | c <- sentence]

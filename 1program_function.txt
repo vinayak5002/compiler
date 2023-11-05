@@ -1,0 +1,56 @@
+calculateGrade :: Int -> String
+calculateGrade score
+    | score >= 90 = "A"
+    | score >= 80 = "B"
+    | score >= 70 = "C"
+    | otherwise = "F"
+    where
+        passingScore = 60
+        failedMessage = "You have failed."
+
+calculateGradeWithWhere :: Int -> String
+calculateGradeWithWhere score
+    | score >= passingScore = "Pass"
+    | score < passingScore = failedMessage
+    where
+        passingScore = 60
+        failedMessage = "You have failed."
+
+calculateGradeWithLet :: Int -> String
+calculateGradeWithLet score = let
+        passingScore = 60
+        failedMessage = "You have failed."
+    in
+    if score >= passingScore
+        then "Pass"
+        else failedMessage
+
+merge :: (Ord a) => [a] -> [a] -> [a]
+merge [] ys = ys
+merge xs [] = xs
+merge (x:xs) (y:ys)
+    | x <= y    = x : merge xs (y:ys)
+    | otherwise = y : merge (x:xs) ys
+
+main :: IO ()
+main = do
+  n <- getline
+  -- Test the factorial function.
+  let fact = factorial 5
+  putStrLn ("Factorial of 5 is " ++ show fact)
+
+  -- Test the isEven function.
+  let evenCheck = isEven 6
+  putStrLn ("Is 6 even? " ++ show evenCheck)
+
+  -- Test the category function.
+  let cat = category (-3)
+  putStrLn ("Category of -3: " ++ cat)
+
+  -- Test the list and list comprehension.
+  putStrLn "List of numbers:"
+  print numbers
+
+  let squaredNumbers = squareList numbers
+  putStrLn "Squared list of numbers:"
+  print squaredNumbers
