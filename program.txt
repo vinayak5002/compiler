@@ -1,0 +1,109 @@
+category :: Int -> String
+category n
+  | n < 0     = "Negative"
+  | n == 0    = "Zero"
+  | n > 0     = "Positive"
+
+numbers :: [Integer]
+numbers = [1, 2, 3, 4, 5]
+
+squares = [x * x | x <- numbers]
+
+evenNumbers = [x | x <- numbers, even x]
+
+xs = [1, 2, 3]
+ys = ["A", "B"]
+pairs = [(x, y) | x <- xs, y <- ys]
+
+positiveSquares = [x * x | x <- numbers, x > 0]
+
+tuples = [(1, "one"), (2, "two"), (3, "three")]
+matching = [x | (x, "two") <- tuples]
+
+tuples = [(1, "one"), (2, "two"), (3, "three")]
+matching = [x | (x, "two") <- tuples]
+
+sentence = "Haskell is functional programming"
+uppercaseVowels = [if elem c "aeiou" then toUpper c else c | c <- sentence]
+
+merge :: (Ord a) => [a] -> [a] -> [a]
+merge [] ys = ys
+merge xs [] = xs
+merge (x:xs) (y:ys)
+    | x <= y    = x : merge xs (y:ys)
+    | otherwise = y : merge (x:xs) ys
+
+main :: IO ()
+main = do
+  n <- getline
+  -- Test the factorial function.
+  let fact = factorial 5
+  putStrLn ("Factorial of 5 is " ++ show fact)
+
+  -- Test the isEven function.
+  let evenCheck = isEven 6
+  putStrLn ("Is 6 even? " ++ show evenCheck)
+
+  -- Test the category function.
+  let cat = category (-3)
+  putStrLn ("Category of -3: " ++ cat)
+
+  -- Test the list and list comprehension.
+  putStrLn "List of numbers:"
+  print numbers
+
+  let squaredNumbers = squareList numbers
+  putStrLn "Squared list of numbers:"
+  print squaredNumbers
+
+data MyType = Constructor1 | Constructor2
+
+data Maybe a = Just a | Nothing
+
+data List a = Nil | Cons a (List a)
+
+data Person = Person { name :: String, age :: Int }
+
+data Color = Red | Green | Blue
+  deriving (Eq, Show)
+
+newtype MyNewType = MyNewType ExistingType
+
+newtype Wrapper a = Wrapper a
+
+newtype EqWrapper a = EqWrapper a
+  deriving (Eq)
+
+newtype Password = Password String
+
+newtype Temperature = Temperature Double
+  deriving (Show, Eq)
+
+newtype Pair a b = Pair (a, b)
+
+newtype PositiveInt = PositiveInt Int
+
+newtype NonEmptyList a = NonEmptyList [a]
+
+class MyClass a where
+    myFunction :: a -> String
+
+class MyTypeClass a where
+    function1 :: a -> Int
+    function2 :: a -> Bool
+
+class Eq a => MyEqClass a where
+    isEqual :: a -> a -> Bool
+
+class MyShow a where
+    myShow :: a -> String
+    default myShow :: Show a => a -> String
+    myShow = show
+
+class MyAssocType a where
+    type MyType a
+    getSomething :: a -> MyType a
+
+class MyDefault a where
+    myDefault :: a -> String
+    myDefault x = "Default: " ++ show x
