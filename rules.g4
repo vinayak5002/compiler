@@ -19,20 +19,27 @@ mon_con_list			:	qvcon COMMA
 						|	qvcon;
 
 //Import statements
-import_statements		:	module_import
-						|	module_import_list;
+import_statements       :   import_statement import_statements
+                        |   import_statement;
+
+import_statement		:	IMPORT module_import import_spec
+                        |   IMPORT module_import
+						|	IMPORT module_import_list import_spec
+						|   IMPORT module_import_list HIDING import_spec;
 
 module_import_list		:	module_import
-						|	module_import COMMA module_import_list;
+                        |	module_import COMMA module_import_list;
 
-module_import			:	QUALIFIED UID
-						|	UID
+module_import			:	QUALIFIED qcon
+						|	qcon
 						|	QUALIFIED qcon AS UID
+						|   qcon AS UID HIDING import_spec
 						|	import_spec;
 
 import_spec				:	LPAREN import_list RPAREN
 						|	LPAREN QUALIFIED import_list RPAREN
            				| 	LPAREN HIDING import_list RPAREN
+           				|   HIDING LPAREN import_list RPAREN
        					| 	LPAREN QUALIFIED AS ID import_list RPAREN
    						| 	LPAREN HIDING QUALIFIED import_list RPAREN
    						|	;
@@ -46,7 +53,8 @@ import_item				:	qcon
            				| 	HIDING QUALIFIED LPAREN import_list RPAREN
        					| 	HIDING QUALIFIED AS qcon LPAREN import_list RPAREN
            				| 	QUALIFIED LPAREN import_list RPAREN
-           				| 	QUALIFIED AS ID LPAREN import_list RPAREN;
+           				| 	QUALIFIED AS ID LPAREN import_list RPAREN
+           				|   ID;
 
 constructor_list		:	ID COMMA constructor_list
 						|	ID;

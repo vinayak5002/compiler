@@ -1,3 +1,18 @@
+import Data.List (sort)
+
+import Data.Map
+
+import qualified Data.Set as Set
+
+import Data.Char (toUpper, toLower)
+import Data.List (sort)
+
+import Data.List hiding (union)
+
+import qualified Data.Map as M (fromList)
+
+import Data.List as List hiding (foldr)
+
 class MyClass a where
     myFunction :: a -> String
 
